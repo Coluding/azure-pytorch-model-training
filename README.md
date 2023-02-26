@@ -3,7 +3,7 @@ A small repo which makes the training of pytorch model in azure possible
 
 # How to use it in the training loop
 
-'''
+```
 # Instaniate a parser to get the paths to the remotely stored data
 parser = argparse.ArgumentParser()
 parser.add_argument('--data-path', type=str,
@@ -26,4 +26,4 @@ model = EfficientNet(remote_run=True, train_path=train_folder, val_path=val_fold
 
 fit(model)
 
-'''
+```

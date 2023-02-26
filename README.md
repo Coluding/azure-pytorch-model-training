@@ -29,3 +29,8 @@ model = EfficientNet(remote_run=True, train_path=train_folder, val_path=val_fold
 fit(model)
 
 ```
+
+# Benefits of using remotely stored data
+- saves local storage 
+- runtime shrinks by a lot
+- if the data is stored locally and the model is trained in the cloud, the whole directory including the data is uploaded to the cloud which takes very long time   

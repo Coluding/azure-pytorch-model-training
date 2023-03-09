@@ -1,0 +1,40 @@
+workspace:
+  subscription_id: '41389919-46b1-46b4-819a-f1ccb00cc40c'
+  tenant_id: '4477f46b-804e-457b-a634-30cd5fcf5daa'
+  create_workspace: False
+  resource_group: 'gpu_training'
+  workspace_name: 'ImageClassification'
+  location: 'westeu'
+  compute_config_target: 'amlcompute'
+  compute_name: 'gpu-cluster-NC6'
+  vm_size: 'Standard_NC6'
+  compute_target: 'moser712GPU'
+  experiment_name: 'test_training'
+  dataset_name: 'crash_images'
+  dataset_id: ''
+
+conda_environment:
+  create_environment: True
+  environment_name: 'image_classifier_with_relative_imports'
+  pip_dependencies:
+    - 'azureml-defaults'
+    - 'torch==1.12.0'
+    - 'mlflow==2.0.1'
+    - 'torchinfo==1.7.1'
+    - 'torchvision==0.13.0'
+    - 'azureml-mlflow==1.48.0'
+    - '../insurance_image_recog/src/model_architecture/training/transforms'
+  conda_dependencies:
+
+data_upload:
+  upload: False
+  path_to_data: 'C:\Users\lbierling\OneDrive - KPMG\Projekte\Versicherung-Fehlererkennung\Project\image_recog_git\image_recog_git\insurance_image_recog\data3'
+  target_path: '/data/'
+  dataset_name: 'crash_images'
+  dataset_description: 'Crash and no crash images for classification'
+
+
+run_script:
+  experiment_name: 'image_classification'
+  run_source_directory: 'C:\Users\lbierling\OneDrive - KPMG\Projekte\Versicherung-Fehlererkennung\Project\image_recog_git\image_recog_git\insurance_image_recog\src\model_architecture\training'
+  run_script_file_name: 'main_training.py'

@@ -7,7 +7,7 @@ from azureml.core.runconfig import RunConfiguration
 from azureml.core.compute import AmlCompute, ComputeTarget
 from azureml.core.conda_dependencies import CondaDependencies
 from azure.ai.ml.entities import ComputeInstance, AmlCompute, ComputeConfiguration
-
+from azureml.core.authentication import InteractiveLoginAuthentication, ServicePrincipalAuthentication
 
 class AzureConnection:
     def __init__(self):
@@ -15,6 +15,7 @@ class AzureConnection:
             self._config = yaml.safe_load(y)
 
         self._subscription_id = self._config["workspace"]["subscription_id"]
+        self._tenant_id = self._config["workspace"]["tenant_id"]
         self._resource_group = self._config["workspace"]["resource_group"]
         self._workspace_name = self._config["workspace"]["workspace_name"]
         self._create_workspace = self._config["workspace"]["create_workspace"]
@@ -71,12 +72,15 @@ class AzureConnection:
     def get_workspace(self):
         try:
             self._workspace = Workspace.from_config()
-        except FileNotFoundError:
+        except:
+            ia = InteractiveLoginAuthentication(tenant_id='4477f46b-804e-457b-a634-30cd5fcf5daa', force=True)
             self._workspace = Workspace(subscription_id=self._subscription_id,
                                         resource_group=self._resource_group,
                                         workspace_name=self._workspace_name,
-                                        _location=self._location
+                                        _location=self._location,
+                                        auth=ia
                                         )
+            self._workspace.write_config()
 
     def create_environment(self):
         self._environment = Environment(self._environment_name)
@@ -84,7 +88,7 @@ class AzureConnection:
         self._environment.python.conda_dependencies = cd
         self._environment.docker.base_image = ("mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.0.3-cudnn8-ubuntu18.04") # to be investigated !!
         self._environment = self._environment.register(workspace=self._workspace)
-        self._environment.write_config(path=".azureml")
+#       self._environment.write_config(path=".azureml")
 
     def get_environment(self):
         if self._workspace is None:

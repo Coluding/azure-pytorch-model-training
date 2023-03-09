@@ -1,0 +1,32 @@
+workspace:
+  subscription_id:
+  create_workspace:
+  resource_group:
+  workspace_name:
+  location:
+  compute_config_target:
+  compute_name:
+  vm_size:
+  compute_target:
+  experiment_name:
+  dataset_name:
+  dataset_id:
+
+conda_environment:
+  create_environment: False
+  environment_name:
+  pip_dependencies:
+  conda_dependencies:
+
+data_upload:
+  upload: False
+  path_to_data:
+  target_path:
+  dataset_name:
+  dataset_description:
+
+
+run_script:
+  experiment_name:
+  run_source_directory:
+  run_script_file_name:
